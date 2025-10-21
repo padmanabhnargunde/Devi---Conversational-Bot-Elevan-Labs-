@@ -1,114 +1,139 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Talk to Devi — Enaxa Training</title>
-  <meta name="description" content="Tap to speak with Devi — AI course advisor. Mobile friendly." />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Devi - Conversational Bot | ElevenLabs</title>
   <style>
-    :root{
-      --bg:#071029; --card:#071728; --accent:#7c3aed; --muted:#9aa4b2; --white:#ffffff;
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: linear-gradient(to bottom right, #fff8f0, #ffe5ec);
+      color: #333;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
     }
-    html,body{height:100%;margin:0;background:linear-gradient(180deg,#071029 0%, #071a2b 100%);font-family:Inter,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:var(--white)}
-    .wrap{min-height:100%;display:flex;align-items:center;justify-content:center;padding:18px}
-    .card{width:100%;max-width:520px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border-radius:14px;padding:18px;box-shadow:0 10px 30px rgba(2,6,23,0.6)}
-    .header{display:flex;gap:12px;align-items:center}
-    .avatar{width:72px;height:72px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,0.06);box-shadow:0 8px 20px rgba(2,6,23,0.45)}
-    h1{margin:0;font-size:18px}
-    p.lead{margin:6px 0 14px;color:var(--muted);font-size:14px}
-    .actions{display:flex;flex-direction:column;gap:10px;margin-top:6px}
-    .btn{background:var(--accent);border:none;color:var(--white);padding:12px 14px;border-radius:10px;font-weight:700;cursor:pointer;box-shadow:0 6px 18px rgba(124,58,237,0.18);font-size:15px}
-    .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--white)}
-    .note{margin-top:12px;color:var(--muted);font-size:13px}
-    #widgetHost{margin-top:14px}
-    footer{margin-top:12px;color:var(--muted);font-size:12px}
-    /* make widget area full width and vertical on mobile */
-    #widgetHost elevenlabs-convai,
-    #widgetHost > * { min-height:420px; display:block; width:100%; }
-    @media (max-width:420px){
-      .card{padding:14px;max-width:420px;border-radius:12px}
-      .avatar{width:64px;height:64px}
-      .btn{font-size:16px;padding:14px}
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      color: #c2185b;
+    }
+    p {
+      font-size: 1.1rem;
+      margin: 0.5rem 1rem 1.5rem;
+    }
+    button {
+      background-color: #c2185b;
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      font-size: 1.1rem;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      transition: all 0.3s ease;
+    }
+    button:hover {
+      background-color: #a31548;
+      transform: scale(1.05);
+    }
+    #avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #c2185b;
+      margin-bottom: 20px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+    }
+    #widgetHost {
+      margin-top: 20px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+    @media (max-width: 600px) {
+      h1 { font-size: 1.5rem; }
+      p { font-size: 1rem; }
+      button { width: 80%; font-size: 1rem; padding: 0.8rem; }
     }
   </style>
 </head>
+
 <body>
-  <div class="wrap">
-    <div class="card" role="main">
-      <div class="header">
-        <!-- Avatar image (publicly hosted SVG avatar from DiceBear). Replace seed 'devi-india' to change look -->
-        <img class="avatar" alt="Devi — Enaxa" src="https://avatars.dicebear.com/api/avataaars/devi-india.svg?background=%23071a2b&radius=50" />
-        <div>
-          <h1>Devi — Enaxa Course Advisor</h1>
-          <div style="color:var(--muted);font-size:13px">Tap "Talk to Devi" and allow mic access. No phone charges.</div>
-        </div>
-      </div>
+  <img id="avatar" src="https://cdn.pixabay.com/photo/2020/11/26/09/16/indian-woman-5776027_960_720.jpg" alt="Devi - Your Course Advisor" />
+  <h1>Talk to Devi</h1>
+  <p>Your friendly AI course advisor. Click below to start a voice chat!</p>
+  <button id="openWidget">🎙️ Talk to Devi</button>
+  <div id="widgetHost"></div>
 
-      <p class="lead">Instant voice conversation — Devi answers questions about courses, schedules and fees. Works on mobile browsers & desktop.</p>
-
-      <div class="actions">
-        <!-- Primary CTA opens the widget -->
-        <button id="openWidget" class="btn">Talk to Devi (voice)</button>
-
-        <!-- Secondary action: copy link for sharing -->
-        <button id="copyLink" class="btn ghost">Copy shareable link</button>
-      </div>
-
-      <!-- Widget will be injected lazily here -->
-      <div id="widgetHost" aria-hidden="false"></div>
-
-      <p class="note">If the page asks for microphone permission, please Allow. If audio does not work inside WhatsApp's in-app browser, choose "Open in browser" (Chrome) for best results.</p>
-      <footer>Powered by ElevenLabs • Enaxa Technology</footer>
-    </div>
-  </div>
-
-  <!-- ========== EDITABLE AREA = agent ID ========== -->
-  <!-- KEEP agent ID here — this is NOT a secret key. -->
+  <!-- ElevenLabs auto-start widget logic -->
   <script>
-    const ELEVEN_AGENT_TAG = '<elevenlabs-convai agent-id=\"agent_8701k6zhc5jrerjafwcgdqrvvf0a\"></elevenlabs-convai>';
+    const ELEVEN_AGENT_TAG = '<elevenlabs-convai agent-id="agent_8701k6zhc5jrerjafwcgdqrvvf0a"></elevenlabs-convai>';
     const ELEVEN_SCRIPT = 'https://unpkg.com/@elevenlabs/convai-widget-embed';
     const openBtn = document.getElementById('openWidget');
-    const copyBtn = document.getElementById('copyLink');
     const host = document.getElementById('widgetHost');
-    const shareUrl = window.location.href; // current page URL for sharing
 
-    function injectWidget(){
-      // avoid injecting twice
+    function injectWidgetAndAutoStart(){
       if (document.querySelector('elevenlabs-convai')) return;
       host.innerHTML = ELEVEN_AGENT_TAG;
+
       const s = document.createElement('script');
       s.src = ELEVEN_SCRIPT;
       s.async = true;
       s.type = 'text/javascript';
-      s.onload = ()=> console.log('ElevenLabs widget loaded');
-      s.onerror = ()=> { console.warn('ElevenLabs widget failed to load'); alert('Failed to load voice widget. Please try again later.'); };
+
+      s.onload = () => {
+        console.log('ElevenLabs widget loaded');
+        const maxMs = 8000;
+        const intervalMs = 250;
+        let elapsed = 0;
+        const id = setInterval(()=>{
+          elapsed += intervalMs;
+          const maybeButtons = host.querySelectorAll('button, [role="button"], .call-btn, .phone-button, .convai-call-button, .callButton');
+          if (maybeButtons && maybeButtons.length){
+            for (const b of maybeButtons){
+              try {
+                if (b && b.offsetParent !== null) {
+                  b.click();
+                  console.log('Auto-clicked widget phone button');
+                  clearInterval(id);
+                  return;
+                }
+              } catch(e){}
+            }
+          }
+          if (elapsed > maxMs) {
+            clearInterval(id);
+            console.log('Phone button not found — manual click may be needed');
+          }
+        }, intervalMs);
+      };
+
+      s.onerror = () => {
+        console.warn('Failed to load ElevenLabs widget script');
+        alert('Unable to load voice widget. Please try again in a moment.');
+      };
+
       document.body.appendChild(s);
-      // scroll into view on mobile
       host.scrollIntoView({behavior:'smooth', block:'center'});
     }
 
-    openBtn.addEventListener('click', ()=> {
-      // Prime mic permission (improves UX on some Android webviews)
+    openBtn.addEventListener('click', ()=>{
       if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia){
         navigator.mediaDevices.getUserMedia({audio:true}).then(stream=>{
           stream.getTracks().forEach(t=>t.stop());
-          injectWidget();
-        }).catch(_err=>{
-          // user denied or unavailable — still inject so widget prompts
-          injectWidget();
+          injectWidgetAndAutoStart();
+        }).catch(()=>{
+          injectWidgetAndAutoStart();
         });
       } else {
-        injectWidget();
-      }
-    });
-
-    copyBtn.addEventListener('click', async ()=>{
-      try {
-        await navigator.clipboard.writeText(shareUrl);
-        copyBtn.textContent = 'Link copied';
-        setTimeout(()=> copyBtn.textContent = 'Copy shareable link', 2000);
-      } catch (e) {
-        alert('Copy failed — please copy manually: ' + shareUrl);
+        injectWidgetAndAutoStart();
       }
     });
   </script>
