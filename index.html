@@ -6,15 +6,9 @@
   <title>Devi - Conversational Bot | ElevenLabs</title>
   <style>
     body {
-<div style="text-align:center; margin-top:20px;">
-  <img src="https://raw.githubusercontent.com/padmanabhnargunde/Devi---Conversational-Bot-Elevan-Labs-/main/Gemini_Generated_Image_930sx930sx930sx9.png" 
-       alt="Devi Bot Avatar"
-       style="width:150px; height:150px; border-radius:50%; object-fit:cover; box-shadow:0 0 10px rgba(0,0,0,0.2);">
-  <h2>Talk to Devi</h2>
-</div>
       font-family: "Segoe UI", sans-serif;
-      background: linear-gradient(to bottom right, #fff8f0, #ffe5ec);
-      color: #333;
+      background: linear-gradient(135deg, #4E61D3, #8EA6FF);
+      color: white;
       margin: 0;
       padding: 0;
       display: flex;
@@ -27,35 +21,36 @@
     h1 {
       font-size: 2rem;
       margin-bottom: 0.5rem;
-      color: #c2185b;
     }
     p {
       font-size: 1.1rem;
       margin: 0.5rem 1rem 1.5rem;
+      color: #e6e6e6;
     }
     button {
-      background-color: #c2185b;
-      color: white;
+      background-color: white;
+      color: #4E61D3;
       border: none;
       padding: 1rem 2rem;
       font-size: 1.1rem;
       border-radius: 30px;
       cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
       transition: all 0.3s ease;
     }
     button:hover {
-      background: linear-gradient(90deg, #ff4081, #ff80ab);
+      background: linear-gradient(90deg, #8EA6FF, #4E61D3);
+      color: white;
       transform: scale(1.05);
     }
     #avatar {
-      width: 120px;
-      height: 120px;
+      width: 150px;
+      height: 150px;
       border-radius: 50%;
       object-fit: cover;
-      border: 3px solid #c2185b;
+      border: 4px solid white;
       margin-bottom: 20px;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+      box-shadow: 0 3px 10px rgba(0,0,0,0.3);
     }
     #widgetHost {
       margin-top: 20px;
@@ -72,13 +67,18 @@
 </head>
 
 <body>
-  <img id="avatar" src="https://cdn.pixabay.com/photo/2020/11/26/09/16/indian-woman-5776027_960_720.jpg" alt="Devi - Your Course Advisor" />
+  <!-- Avatar -->
+  <img id="avatar" src="https://raw.githubusercontent.com/padmanabhnargunde/Devi---Conversational-Bot-Elevan-Labs-/main/Gemini_Generated_Image_930sx930sx930sx9.png" alt="Devi - AI Course Advisor" />
+  
+  <!-- Title and description -->
   <h1>Talk to Devi</h1>
   <p>Your friendly AI course advisor. Click below to start a voice chat!</p>
+
+  <!-- Button -->
   <button id="openWidget">🎙️ Talk to Devi</button>
   <div id="widgetHost"></div>
 
-  <!-- ElevenLabs auto-start widget logic -->
+  <!-- ElevenLabs Voice Widget Script -->
   <script>
     const ELEVEN_AGENT_TAG = '<elevenlabs-convai agent-id="agent_8701k6zhc5jrerjafwcgdqrvvf0a"></elevenlabs-convai>';
     const ELEVEN_SCRIPT = 'https://unpkg.com/@elevenlabs/convai-widget-embed';
